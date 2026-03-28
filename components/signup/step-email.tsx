@@ -20,15 +20,16 @@ export function StepEmail({ email, onEmailChange, onNext, isLoading, error }: St
         <label className="block text-sm font-medium text-foreground mb-2">
           Business Email
         </label>
-        <div className="relative">
-          <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
+        <div className="relative group">
+          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none transition-colors duration-200 group-focus-within:text-red-500" />
           <input
             type="email"
             value={email}
             onChange={(e) => onEmailChange(e.target.value)}
             placeholder="you@company.com"
-            className="w-full pl-10 pr-4 py-2 border border-border/40 rounded-lg bg-card text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+            className="w-full pl-12 pr-4 py-3 text-base border border-white/10 rounded-xl bg-white/5 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/30 focus:shadow-[0_0_0_2px_#D32F2F33] transition-all duration-200 backdrop-blur-sm shadow-sm hover:shadow-red-glow"
             disabled={isLoading}
+            autoComplete="email"
           />
         </div>
         {error && (
@@ -41,9 +42,9 @@ export function StepEmail({ email, onEmailChange, onNext, isLoading, error }: St
       <Button
         onClick={onNext}
         disabled={!isValidEmail || isLoading}
-        className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+        className="w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-br from-red-600 to-red-500 text-white shadow-lg shadow-red-500/10 hover:scale-[1.02] hover:shadow-red-glow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/40 disabled:opacity-60 disabled:shadow-none disabled:cursor-not-allowed"
       >
-        {isLoading ? 'Sending OTP...' : '        Continue'}
+        {isLoading ? 'Sending OTP...' : 'Continue'}
       </Button>
     </div>
   );

@@ -1,0 +1,6 @@
+@media (max-width: 900px) {
+  .about-why-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}

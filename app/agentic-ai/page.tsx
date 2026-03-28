@@ -297,9 +297,8 @@ export default function AgenticAIPage() {
                   { label: 'Context Injection', color: 'var(--text-primary)', bg: 'var(--bg-surface)', border: '1.5px solid var(--border-dim)' },
                   { label: 'Grounded Response', color: 'var(--red)', bg: 'rgba(211,47,47,0.08)', border: '1.5px solid var(--red)' }
                 ].map((step, i, arr) => (
-                  <>
+                  <span key={step.label + '-' + i} style={{ display: 'contents' }}>
                     <div
-                      key={step.label}
                       style={{
                         background: step.bg,
                         color: step.color,
@@ -352,7 +351,7 @@ export default function AgenticAIPage() {
                         </svg>
                       </div>
                     )}
-                  </>
+                  </span>
                 ))}
               </div>
             </div>

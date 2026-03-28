@@ -61,7 +61,7 @@ export function StepOTP({
               value={digit}
               onChange={(e) => onOtpChange(index, e.target.value)}
               onKeyDown={(e) => onOtpKeyDown(index, e)}
-              className="w-12 h-12 text-center text-2xl font-bold border border-border/40 rounded-lg bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all"
+              className="w-14 h-14 text-center text-2xl font-bold border border-white/10 rounded-xl bg-white/5 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/30 focus:shadow-[0_0_0_2px_#D32F2F33] transition-all duration-200 backdrop-blur-sm shadow-sm hover:shadow-red-glow"
               disabled={isLoading}
               autoFocus={index === 0}
             />
@@ -82,7 +82,7 @@ export function StepOTP({
       <Button
         onClick={onVerify}
         disabled={!isComplete || isLoading}
-        className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
+        className="w-full py-3 text-base font-semibold rounded-xl bg-gradient-to-br from-red-600 to-red-500 text-white shadow-lg shadow-red-500/10 hover:scale-[1.02] hover:shadow-red-glow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/40 disabled:opacity-60 disabled:shadow-none disabled:cursor-not-allowed"
       >
         {isLoading ? 'Verifying...' : 'Verify Code'}
       </Button>
@@ -90,7 +90,7 @@ export function StepOTP({
       <button
         onClick={onResend}
         disabled={isLoading || timeLeft > 240}
-        className="w-full py-2 text-sm text-accent hover:text-accent/80 disabled:text-muted-foreground transition-colors"
+        className="w-full py-2 text-sm font-medium rounded-lg text-red-500 hover:text-white hover:bg-red-500/90 transition-all duration-200 disabled:text-muted-foreground disabled:bg-transparent disabled:cursor-not-allowed"
       >
         {timeLeft > 240 ? `Resend in ${Math.floor((300 - timeLeft) / 60)} min` : 'Resend Code'}
       </button>

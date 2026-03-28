@@ -1,7 +1,11 @@
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { GradientText } from '@/components/ui/gradient-text';
+
 import Link from 'next/link';
+
+import { Sparkles, Shield, Layers, Zap, Rocket, Cloud, Users, HeartHandshake } from 'lucide-react';
+import '@/styles/about-responsive.css';
 
 export default function AboutPage() {
     return (
@@ -82,38 +86,82 @@ export default function AboutPage() {
                     <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '48px', textAlign: 'center' }}>
                         Why Choose Vitto?
                     </h2>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+                    <div
+                        className="about-why-grid"
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(3, 1fr)',
+                            gap: '32px',
+                            margin: 0
+                        }}
+                    >
                         {[
                             {
                                 title: 'AI-Driven Automation',
-                                description: 'Automate complex workflows, from onboarding to compliance, with intelligent agents and RAG pipelines.'
+                                description: 'Automate complex workflows, from onboarding to compliance, with intelligent agents and RAG pipelines.',
+                                icon: Sparkles
                             },
                             {
                                 title: 'Bank-Grade Security',
-                                description: 'Enterprise security, audit trails, and compliance built-in. Trusted by leading banks.'
+                                description: 'Enterprise security, audit trails, and compliance built-in. Trusted by leading banks.',
+                                icon: Shield
                             },
                             {
                                 title: 'Modular & Composable',
-                                description: 'Mix, match, and extend modules to fit your unique business needs. No vendor lock-in.'
+                                description: 'Mix, match, and extend modules to fit your unique business needs. No vendor lock-in.',
+                                icon: Layers
                             },
                             {
                                 title: 'Lightning Fast Deployment',
-                                description: 'Go live in weeks, not months. Pre-built solutions and one-click deployment.'
+                                description: 'Go live in weeks, not months. Pre-built solutions and one-click deployment.',
+                                icon: Rocket
                             },
                             {
                                 title: 'Scalable & Resilient',
-                                description: 'Cloud-native, multi-region, and high-availability architecture for mission-critical workloads.'
+                                description: 'Cloud-native, multi-region, and high-availability architecture for mission-critical workloads.',
+                                icon: Cloud
                             },
                             {
                                 title: 'Customer-Centric Design',
-                                description: 'Intuitive interfaces and personalized experiences for both staff and end-customers.'
+                                description: 'Intuitive interfaces and personalized experiences for both staff and end-customers.',
+                                icon: HeartHandshake
                             }
-                        ].map((feature, idx) => (
-                            <div key={idx} style={{ background: 'var(--bg-base)', borderRadius: '16px', boxShadow: '0 2px 24px 0 rgba(10,24,51,0.06)', padding: '32px', border: '1px solid var(--border-dim)' }}>
-                                <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '12px' }}>{feature.title}</h3>
-                                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{feature.description}</p>
-                            </div>
-                        ))}
+                        ].map((feature, idx) => {
+                            const Icon = feature.icon;
+                            return (
+                                <div
+                                    key={idx}
+                                    style={{
+                                        background: 'var(--bg-base)',
+                                        borderRadius: '16px',
+                                        boxShadow: '0 2px 24px 0 rgba(10,24,51,0.06)',
+                                        padding: '32px',
+                                        border: '1px solid var(--border-dim)',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-start',
+                                        minWidth: 0,
+                                        overflow: 'hidden',
+                                    }}
+                                >
+                                    <div style={{
+                                        width: 40,
+                                        height: 40,
+                                        borderRadius: '50%',
+                                        background: 'rgba(211,47,47,0.10)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginBottom: 18,
+                                        boxShadow: '0 2px 8px 0 rgba(211,47,47,0.06)'
+                                    }}>
+                                        <Icon style={{ width: 22, height: 22, color: 'var(--red)' }} />
+                                    </div>
+                                    <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '12px', marginTop: 0 }}>{feature.title}</h3>
+                                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', margin: 0 }}>{feature.description}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

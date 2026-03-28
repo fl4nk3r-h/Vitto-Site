@@ -154,25 +154,20 @@ export default function SignUpPage() {
 
 
   return (
-    <main style={{ minHeight: '100vh', background: 'var(--bg-base)' }}>
+    <main className="relative min-h-screen bg-navy-900 flex flex-col">
+      {/* Background gradient, radial glow, and grid overlay */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#181A20] via-[#0a1833] to-[#2d0a0a]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(211,47,47,0.13)_0%,transparent_70%)]" />
+        <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:'repeating-linear-gradient(0deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px),repeating-linear-gradient(90deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px)'}} />
+        {/* Radial highlight behind card */}
+        <div className="absolute left-1/2 top-[32%] -translate-x-1/2 -z-10 w-[520px] h-[340px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.10)_0%,rgba(211,47,47,0.10)_60%,transparent_100%)] blur-2xl opacity-80" />
+      </div>
       <Header />
 
-      <section style={{
-        padding: '64px 0',
-        borderBottom: '1px solid var(--border-dim)',
-        background: 'var(--bg-surface)'
-      }}>
-        <div className="container-vitto" style={{ maxWidth: 640 }}>
-          {/* Step Indicator */}
-          {step !== 'success' && (
-            <div style={{ marginBottom: 48 }}>
-              <StepIndicator
-                currentStep={getStepNumber()}
-                totalSteps={3}
-                labels={['Email', 'Verify', 'Details']}
-              />
-            </div>
-          )}
+      <section className="py-16 border-b border-border bg-transparent flex flex-col items-center">
+        <div className="w-full max-w-[520px] px-4 mx-auto">
+
 
           {/* Content */}
           {step === 'success' ? (
@@ -223,49 +218,65 @@ export default function SignUpPage() {
             </div>
           ) : (
             <div>
-              <h1 style={{ fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 8 }}>
+              <h1 className="text-3xl sm:text-4xl font-extrabold mb-3 bg-gradient-to-br from-white via-red-200 to-red-500 bg-clip-text text-transparent drop-shadow-lg tracking-tight">
                 Join Vitto
               </h1>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: 48 }}>
+              <p className="text-base sm:text-lg mb-12 text-muted-foreground font-medium max-w-xl mx-auto text-center">
                 {step === 'email' && 'Start your free trial of our AI-first banking infrastructure.'}
                 {step === 'otp' && 'Verify your email with the code we sent.'}
                 {step === 'organization' && 'Tell us about your institution.'}
               </p>
 
-              {/* Step Content */}
-              <div style={{ background: 'var(--bg-base)', border: '1px solid var(--border-dim)', borderRadius: 12, padding: 32 }}>
-                {step === 'email' && (
-                  <StepEmail
-                    email={email}
-                    onEmailChange={setEmail}
-                    onNext={handleSendOTP}
-                    isLoading={isLoading}
-                    error={error}
-                  />
-                )}
+              {/* Step Content - Glassmorphism Card with integrated progress */}
+              <div className="relative bg-white/10 border border-white/20 rounded-2xl shadow-xl shadow-black/30 backdrop-blur-[12px] px-6 py-8 sm:px-10 sm:py-10 transition-all duration-300 group focus-within:shadow-red-glow focus-within:border-red-500/60" style={{boxShadow:'0 4px 32px 0 rgba(211,47,47,0.10), 0 2px 16px 0 rgba(211,47,47,0.10)'}}>
+                <div className="absolute -inset-px rounded-2xl pointer-events-none" style={{background:'linear-gradient(120deg,rgba(255,255,255,0.08) 0%,rgba(211,47,47,0.10) 100%)',zIndex:0}} />
+                <div className="relative z-10">
+                  {/* Progress indicator inside card */}
+                  <div className="mb-6">
+                    <div className="text-xs font-semibold text-muted-foreground mb-2 text-left">
+                      Step {getStepNumber()} of 3
+                    </div>
+                    <div className="w-full h-2 rounded bg-white/10 overflow-hidden">
+                      <div
+                        className="h-2 rounded bg-gradient-to-r from-red-500 to-red-400 transition-all duration-300"
+                        style={{ width: `${Math.min((getStepNumber() - 1) / 2 * 100, 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                  {/* Step form content */}
+                  {step === 'email' && (
+                    <StepEmail
+                      email={email}
+                      onEmailChange={setEmail}
+                      onNext={handleSendOTP}
+                      isLoading={isLoading}
+                      error={error}
+                    />
+                  )}
 
-                {step === 'otp' && (
-                  <StepOTP
-                    email={email}
-                    otp={otp}
-                    onOtpChange={handleOtpChange}
-                    onOtpKeyDown={handleOtpKeyDown}
-                    onVerify={handleVerifyOTP}
-                    onResend={handleResendOTP}
-                    isLoading={isLoading}
-                    error={error}
-                  />
-                )}
+                  {step === 'otp' && (
+                    <StepOTP
+                      email={email}
+                      otp={otp}
+                      onOtpChange={handleOtpChange}
+                      onOtpKeyDown={handleOtpKeyDown}
+                      onVerify={handleVerifyOTP}
+                      onResend={handleResendOTP}
+                      isLoading={isLoading}
+                      error={error}
+                    />
+                  )}
 
-                {step === 'organization' && (
-                  <StepOrganization
-                    formData={formData}
-                    onChange={handleFormChange}
-                    onSubmit={handleCreateAccount}
-                    isLoading={isLoading}
-                    error={error}
-                  />
-                )}
+                  {step === 'organization' && (
+                    <StepOrganization
+                      formData={formData}
+                      onChange={handleFormChange}
+                      onSubmit={handleCreateAccount}
+                      isLoading={isLoading}
+                      error={error}
+                    />
+                  )}
+                </div>
               </div>
 
               {/* Back Link */}
@@ -301,9 +312,9 @@ export default function SignUpPage() {
 
       {/* Benefits */}
       {step !== 'success' && (
-        <section style={{ padding: '64px 0', background: 'rgba(107,0,0,0.06)' }}>
+        <section className="py-16 bg-transparent">
           <div className="container-vitto">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px', maxWidth: 900 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
               {[
                 {
                   title: '6 Core Modules',
@@ -318,9 +329,9 @@ export default function SignUpPage() {
                   description: 'Deploy in hours. BFSI compliant. 99.99% uptime SLA'
                 }
               ].map((benefit, index) => (
-                <div key={index}>
-                  <h3 style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>{benefit.title}</h3>
-                  <p style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{benefit.description}</p>
+                <div key={index} className="rounded-xl bg-white/5 border border-white/10 p-6 shadow-md shadow-red-500/5 flex flex-col items-start transition-all duration-200 hover:shadow-red-glow group">
+                  <h3 className="font-semibold text-lg text-foreground mb-2 group-hover:text-red-500 transition-colors duration-200">{benefit.title}</h3>
+                  <p className="text-sm text-muted-foreground/90">{benefit.description}</p>
                 </div>
               ))}
             </div>
