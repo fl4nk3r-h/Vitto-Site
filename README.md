@@ -1,253 +1,179 @@
-# Vitto - AI-First Banking Infrastructure
+<div align="center">
+  <h1>Vitto — AI-First Banking Infrastructure</h1>
+  <p><i>Monorepo: Next.js frontend + Node.js/Express backend</i></p>
+  <p>
+    <img alt="Next.js" src="https://img.shields.io/badge/Next.js-16-black?logo=nextdotjs&logoColor=white" />
+    <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" />
+    <img alt="Express" src="https://img.shields.io/badge/Express-4-black?logo=express&logoColor=white" />
+    <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-14-336791?logo=postgresql&logoColor=white" />
+    <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-6-47A248?logo=mongodb&logoColor=white" />
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white" />
+  </p>
+</div>
 
-A production-ready website and platform for Vitto's AI-first banking infrastructure solution.
+---
 
-## Overview
-
-Vitto is an AI-native platform designed from the ground up for banking and financial services. It provides:
-
-- **6 Core Modules**: SLM Core, RAG Pipeline, Agent Orchestration, Compliance Framework, Real-time Monitoring, Enterprise Integration
-- **29+ Operational Modules**: Organized across 5 layers: Data Foundation, Model Layer, Integration Layer, Compliance & Security, Observability
-- **3 Pre-built Agents**: Loan Processing, Customer Service, Fraud Detection
-- **6 Industry Collections**: Solutions for Commercial Banking, Retail, Risk & Compliance, Collections, Trade Finance, Mortgage Services
-
-## Tech Stack
-
-### Frontend
-- **Framework**: Next.js 16 (App Router)
-- **UI Library**: React 19.2.4
-- **Styling**: Tailwind CSS v4 with custom design tokens
-- **Animations**: Framer Motion
-- **Components**: Custom components + shadcn/ui
-- **Form Handling**: React Hook Form + custom validation
-
-### Backend
-- **Framework**: Next.js API Routes
-- **Authentication**: OTP-based (send-otp, verify-otp)
-- **Storage**: Mock in-memory stores (ready for PostgreSQL + MongoDB)
-- **Validation**: Input validation on all endpoints
-
-## Project Structure
+## Structure
 
 ```
-app/
-├── page.tsx                 # Homepage with 8 sections
-├── platform/               # AI-First Platform details
-├── automation/             # 29+ Operational Modules
-├── agentic-ai/            # Autonomous Agents & RAG
-├── collections/           # Industry Solutions
-├── contact/               # Contact Page
-├── signup/                # 3-Step Sign-Up Flow
-└── api/
-    ├── auth/
-    │   ├── send-otp/      # Generate & send OTP
-    │   └── verify-otp/    # Verify OTP & create session
-    └── leads/             # Store lead data
-components/
-├── header.tsx             # Navigation
-├── footer.tsx             # Footer
-├── home/                  # Homepage sections
-├── signup/                # Sign-up form steps
-├── ui/                    # Custom UI components
-└── comparison-table.tsx   # SLM vs LLM comparison
-lib/
-├── constants/             # Modules, navigation, testimonials
-├── hooks/                 # useOTP, useFormValidation, useScrollAnimation
-└── utils.ts              # Utility functions
+vitto/                          ← monorepo root
+├── frontend/                   ← Next.js 16 app
+│   ├── app/                    ← pages and API routes (thin wrappers, proxied to backend)
+│   ├── components/
+│   └── ...
+├── backend/                    ← Node.js + Express API
+│   ├── src/
+│   │   ├── index.ts            ← server entry point
+│   │   ├── routes/             ← auth.ts, leads.ts
+│   │   ├── middleware/         ← auth.ts (JWT), validate.ts
+│   │   ├── models/             ← OTPSession.ts (Mongoose + TTL)
+│   │   └── db/                 ← postgres.ts, mongo.ts
+│   ├── migrations/
+│   │   └── 001_create_leads.ts ← PostgreSQL schema + indexes
+│   └── vitto-api.postman_collection.json
+└── package.json                ← workspace root
 ```
 
-## Key Features
+---
 
-### Homepage
-- Hero section with CTA
-- 4 Problem cards highlighting limitations of retrofit AI
-- Solution overview with 4 key differentiators
-- 6 Core Modules showcase
-- Stats section (92% faster, 99.99% uptime, 50+ models, 15-min integration)
-- Testimonials from leading Indian banks
-- Call-to-action section
+## Prerequisites
 
-### Inner Pages
-- **Platform**: Deep dive into 6 modules + SLM vs LLM comparison table
-- **Automation**: All 29 operational modules organized into 5 layers
-- **Agentic AI**: Pre-built agents, RAG pipeline diagram, multi-agent orchestration
-- **Collections**: 6 industry solutions with pre-configured modules and impact metrics
-
-### Sign-Up Flow
-- **Step 1**: Email entry with OTP request
-- **Step 2**: OTP verification (6-digit code, 5-min expiry, resend option)
-- **Step 3**: Organization details (name, type, city, phone, loan book size)
-- **Success**: Confirmation page with next steps
-
-### Design System
-- **Colors**: Dark navy (#0D0D1A) + red (#D32F2F) + grays
-- **Typography**: Geist (sans) font family
-- **Animations**: Fade-in, fade-in-up, scroll-triggered animations
-- **Responsive**: Mobile-first, fully responsive design
-
-## Getting Started
-
-### Prerequisites
 - Node.js 18+
-- pnpm (or npm/yarn)
+- pnpm
+- PostgreSQL 14+
+- MongoDB 6+
 
-### Installation
+---
 
-1. Clone the repository:
+## Quick Start
+
+### 1. Clone and install
+
 ```bash
-git clone https://github.com/yourusername/vitto.git
-cd vitto
+git clone https://github.com/fl4nk3r-h/Vitto-Site.git
+cd Vitto-Site
+pnpm install          # installs both workspaces
 ```
 
-2. Install dependencies:
+### 2. Configure environment
+
 ```bash
-pnpm install
+# Frontend
+cp frontend/.env.example frontend/.env.local
+
+# Backend
+cp backend/.env.example backend/.env
+# Edit backend/.env with your PostgreSQL and MongoDB credentials
 ```
 
-3. Set up environment variables (if needed):
+### 3. Run database migration
+
 ```bash
-cp .env.example .env.local
+pnpm --filter backend migrate
 ```
 
-4. Run the development server:
+This creates the `leads` table in PostgreSQL with indexes and an auto-update trigger on `updated_at`.
+
+### 4. Start both servers
+
 ```bash
 pnpm dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:3000 |
+| Backend API | http://localhost:4000 |
 
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/send-otp` - Send OTP to email
-  - Body: `{ email: string }`
-  - Response: `{ success: true, message: string, otp?: string (dev only) }`
-
-- `POST /api/auth/verify-otp` - Verify OTP and create session
-  - Body: `{ email: string, otp: string }`
-  - Response: `{ success: true, sessionToken: string }`
-
-### Leads
-- `POST /api/leads` - Create lead with organization details
-  - Headers: `Authorization: Bearer {sessionToken}`
-  - Body: `{ institutionName, institutionType, city, phoneNumber, loanBookSize }`
-  - Response: `{ success: true, lead: Lead }`
-
-- `GET /api/leads?id={leadId}` - Fetch lead details
-  - Headers: `Authorization: Bearer {sessionToken}`
-  - Response: `Lead`
-
-## Development Notes
-
-### Mock Data & Services
-Currently, the backend uses in-memory stores for:
-- OTP sessions (10-min TTL)
-- Session tokens (24-hour TTL)
-- Lead records
-
-### For Production Deployment
-Replace with:
-- **PostgreSQL** for leads storage
-- **MongoDB** for OTP sessions (with TTL index)
-- **Redis** for session management
-- Real email service (SendGrid, AWS SES) for OTP delivery
-
-### Custom Hooks
-- `useOTP()` - OTP input handling with auto-focus
-- `useFormValidation()` - Form state, validation, and submission
-- `useScrollAnimation()` - Intersection observer for scroll animations
-
-### UI Components
-- `GradientText` - Text with gradient (primary to accent)
-- `GlowCard` - Card with hover glow effect
-- `StepIndicator` - Multi-step form indicator
-- `ComparisonTable` - SLM vs LLM comparison
-
-## Deployment
-
-### Vercel (Recommended)
-```bash
-pnpm build
-vercel deploy
-```
-
-### Self-Hosted
-```bash
-pnpm build
-pnpm start
-```
-
-## API Documentation
-
-### Example: Complete Sign-Up Flow
+Or run separately:
 
 ```bash
-# Step 1: Send OTP
-curl -X POST http://localhost:3000/api/auth/send-otp \
-  -H "Content-Type: application/json" \
-  -d '{ "email": "user@company.com" }'
-
-# Response (dev only includes OTP):
-# { "success": true, "message": "OTP sent successfully", "otp": "123456" }
-
-# Step 2: Verify OTP
-curl -X POST http://localhost:3000/api/auth/verify-otp \
-  -H "Content-Type: application/json" \
-  -d '{ "email": "user@company.com", "otp": "123456" }'
-
-# Response:
-# { "success": true, "sessionToken": "abc123..." }
-
-# Step 3: Create Lead
-curl -X POST http://localhost:3000/api/leads \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer abc123..." \
-  -d '{
-    "institutionName": "ICICI Bank",
-    "institutionType": "Bank",
-    "city": "Mumbai",
-    "phoneNumber": "+91 9876543210",
-    "loanBookSize": "1000-5000 Cr"
-  }'
-
-# Response:
-# { "success": true, "lead": { "id": "lead_...", ... } }
+pnpm dev:frontend
+pnpm dev:backend
 ```
-
-## Performance Metrics
-
-- **Lighthouse**: 90+ on all metrics
-- **Core Web Vitals**: LCP < 2.5s, FID < 100ms, CLS < 0.1
-- **Time to Interactive**: < 3s on 3G
-- **Bundle Size**: Optimized with code splitting
-
-## Browser Support
-
-- Chrome (latest)
-- Safari (latest)
-- Firefox (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Contributing
-
-Guidelines for contributing to the Vitto website:
-1. Create a feature branch
-2. Follow the existing code style
-3. Test all changes locally
-4. Submit a pull request
-
-## License
-
-Proprietary - Vitto Technologies
-
-## Support
-
-For issues or questions:
-- Email: hello@vitto.ai
-- Phone: +91 98765 43210
-- Visit: [vitto.ai](https://vitto.ai)
 
 ---
 
-Built with Next.js, React, and Tailwind CSS. Designed for banking, built for the future.
+## Architecture
+
+The frontend and backend are independent deployable units.
+
+```
+Browser → Next.js (Vercel)  →  Express API (Render)  →  PostgreSQL
+                                                      →  MongoDB (OTP TTL)
+```
+
+The Next.js API routes in `frontend/app/api/` are intentionally kept as thin pass-throughs or can be removed entirely — all business logic lives in the Express backend.
+
+**Why separate backend instead of Next.js API routes only:**
+The assignment explicitly requires Node.js + Express, PostgreSQL with migrations, and MongoDB with a TTL index. These are not Next.js-native constructs. The Express backend gives us proper connection pooling, a migration system, Mongoose TTL indexes, and JWT middleware — none of which are idiomatic in Next.js API routes.
+
+---
+
+## Databases
+
+### PostgreSQL — lead storage
+
+Managed via `backend/migrations/`. Schema:
+
+```sql
+leads (
+  id                VARCHAR(64)   PRIMARY KEY,   -- UUID
+  email             VARCHAR(255)  NOT NULL,
+  phone             VARCHAR(20),
+  institution_name  VARCHAR(255)  NOT NULL,
+  institution_type  VARCHAR(50)   NOT NULL,      -- Bank | NBFC | MFI | ...
+  city              VARCHAR(100)  NOT NULL,
+  loan_book_size    VARCHAR(50)   NOT NULL,
+  status            VARCHAR(20)   DEFAULT 'pending',
+  created_at        TIMESTAMPTZ   DEFAULT NOW(),
+  updated_at        TIMESTAMPTZ   DEFAULT NOW()
+)
+```
+
+### MongoDB — OTP sessions
+
+Mongoose model with `expires: 600` on the `createdAt` field — MongoDB's TTL mechanism automatically deletes documents 10 minutes after creation. No manual cleanup required.
+
+---
+
+## API Endpoints
+
+Full documentation and example request/response bodies: `backend/README.md`
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| `GET` | `/health` | — | Server health check |
+| `POST` | `/api/auth/send-otp` | — | Generate OTP, store in MongoDB |
+| `POST` | `/api/auth/verify-otp` | — | Verify OTP, return JWT |
+| `POST` | `/api/leads` | JWT | Create lead in PostgreSQL |
+| `GET` | `/api/leads/:id` | JWT | Fetch lead by ID |
+
+Import `backend/vitto-api.postman_collection.json` into Postman to test all endpoints. The collection auto-captures the OTP and session token between requests.
+
+---
+
+## Deployment
+
+### Frontend — Vercel
+
+```bash
+cd frontend
+vercel deploy
+```
+
+Set `NEXT_PUBLIC_API_URL=https://your-backend.render.com` in Vercel environment variables.
+
+### Backend — Render
+
+1. Connect the `backend/` directory as a new Web Service on Render
+2. Set build command: `pnpm install && pnpm build`
+3. Set start command: `pnpm start`
+4. Add all environment variables from `backend/.env.example`
+5. Run migration once after first deploy: `pnpm migrate`
+
+---
+
+## License
+
+Proprietary — Vitto Technologies
