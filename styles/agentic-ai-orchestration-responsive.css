@@ -1,0 +1,8 @@
+/* Responsive fix for Multi-Agent Orchestration grid in Agentic AI page */
+@media (max-width: 900px) {
+  .orchestration-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    padding: 0 2vw;
+  }
+}

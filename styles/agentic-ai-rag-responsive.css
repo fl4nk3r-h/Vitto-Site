@@ -1,0 +1,8 @@
+/* Responsive fix for RAG Pipeline grid in Agentic AI page */
+@media (max-width: 900px) {
+  .rag-pipeline-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    padding: 0 2vw;
+  }
+}

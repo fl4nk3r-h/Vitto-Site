@@ -6,6 +6,11 @@ import { GlowCard } from '@/components/ui/glow-card';
 import { AGENTIC_AI_AGENTS } from '@/lib/constants/modules';
 import Link from 'next/link';
 import { CheckCircle2 } from 'lucide-react';
+import '@/styles/agentic-ai-responsive.css';
+import '@/styles/agentic-ai-rag-responsive.css';
+import '@/styles/agentic-ai-orchestration-responsive.css';
+
+import '@/styles/agentic-ai-use-cases-responsive.css';
 
 
 export default function AgenticAIPage() {
@@ -81,51 +86,90 @@ export default function AgenticAIPage() {
         </div>
       </section>
 
-      {/* Agents */}
+      {/* Agents - Premium Responsive Grid */}
       <section style={{
-        padding: '96px 0',
-        borderBottom: '1px solid var(--border-dim)',
-        background: 'var(--bg-base)'
+        padding: '80px 0',
+        background: 'var(--bg-base)',
       }}>
         <div className="container-vitto">
-          <div style={{ maxWidth: 640, marginBottom: 64 }}>
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
             <h2 style={{
               fontFamily: 'Inter, sans-serif',
-              fontSize: '32px',
-              fontWeight: 700,
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              fontWeight: 800,
               color: 'var(--text-primary)',
-              marginBottom: '16px'
+              marginBottom: '16px',
+              letterSpacing: '-0.02em',
             }}>
-              Pre-Built Agents
+              Explore All AI Agents
             </h2>
             <p style={{
-              fontFamily: 'Inter, sans-serif',
               fontSize: '18px',
-              color: 'var(--text-secondary)'
+              color: 'var(--text-secondary)',
+              maxWidth: '600px',
+              margin: '0 auto',
             }}>
               Each agent is a complete autonomous system trained on BFSI workflows. Deploy independently or combine for complex orchestrations.
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '24px'
-          }}>
+          <div
+            className="agents-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+              gap: '32px',
+            }}
+          >
             {AGENTIC_AI_AGENTS.map((agent, index) => (
-              <GlowCard key={index} delay={index * 0.1}>
+              <div
+                key={index}
+                style={{
+                  position: 'relative',
+                  background: 'var(--bg-surface)',
+                  borderRadius: 16,
+                  border: '1px solid var(--border-dim)',
+                  padding: '32px',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  boxShadow: '0 4px 24px rgba(10,24,51,0.08)',
+                  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: 16 }}>
+                  <div style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    background: 'rgba(211,47,47,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <CheckCircle2 style={{ width: 22, height: 22, color: 'var(--red)' }} />
+                  </div>
+                  <span style={{
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    color: 'var(--red)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em',
+                  }}>AI Agent</span>
+                </div>
                 <h3 style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '18px',
-                  fontWeight: 600,
+                  fontSize: '20px',
+                  fontWeight: 700,
                   color: 'var(--text-primary)',
-                  marginBottom: '12px'
+                  marginBottom: '10px',
+                  letterSpacing: '-0.01em',
                 }}>{agent.name}</h3>
                 <p style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '14px',
+                  fontSize: '15px',
                   color: 'var(--text-secondary)',
-                  marginBottom: '24px'
+                  lineHeight: 1.6,
+                  marginBottom: 16,
                 }}>{agent.description}</p>
                 <div>
                   <div style={{
@@ -143,7 +187,7 @@ export default function AgenticAIPage() {
                     </div>
                   ))}
                 </div>
-              </GlowCard>
+              </div>
             ))}
           </div>
         </div>
@@ -175,12 +219,15 @@ export default function AgenticAIPage() {
             </p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '20px',
-            marginBottom: '48px'
-          }}>
+          <div
+            className="rag-pipeline-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '20px',
+              marginBottom: '48px'
+            }}
+          >
             {[
               {
                 step: '1',
@@ -330,7 +377,7 @@ export default function AgenticAIPage() {
             Multi-Agent Orchestration
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px' }}>
+          <div className="orchestration-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px' }}>
             <GlowCard>
               <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '16px' }}>Sequential Workflows</h3>
               <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '16px' }}>
@@ -375,7 +422,7 @@ export default function AgenticAIPage() {
             Banking Use Cases
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
+          <div className="use-cases-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '24px' }}>
             {[
               {
                 title: 'Loan Processing',

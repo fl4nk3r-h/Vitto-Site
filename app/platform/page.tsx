@@ -1,7 +1,9 @@
+"use client";
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { GradientText } from '@/components/ui/gradient-text';
 import { GlowCard } from '@/components/ui/glow-card';
+
 import { ComparisonTable } from '@/components/comparison-table';
 import { AI_FIRST_MODULES } from '@/lib/constants/modules';
 import * as Icons from 'lucide-react';
@@ -9,6 +11,51 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import '@/styles/hero-bg-grid.css';
 import '@/styles/system-status-bar.css';
+import '@/styles/platform-responsive.css';
+import React from 'react';
+// Responsive Module Card with Read More for mobile
+function ModuleCard({ module }) {
+  const [expanded, setExpanded] = React.useState(false);
+  const descRef = React.useRef(null);
+  const [isTruncated, setIsTruncated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (descRef.current) {
+      setIsTruncated(descRef.current.scrollHeight > descRef.current.clientHeight);
+    }
+  }, [expanded]);
+
+  const IconComponent = Icons[module.icon as keyof typeof Icons];
+  const SafeIcon =
+    typeof IconComponent === 'function' && !("iconNode" in IconComponent)
+      ? IconComponent
+      : Icons.Zap;
+
+  return (
+    <GlowCard>
+      <SafeIcon style={{ width: 32, height: 32, color: 'var(--red)', marginBottom: 16 }} />
+      <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '12px' }}>{module.title}</h3>
+      <p
+        ref={descRef}
+        className={expanded ? 'platform-module-description expanded' : 'platform-module-description'}
+        style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '16px' }}
+      >
+        {module.description}
+      </p>
+      {/* Show Read more only on mobile and if truncated */}
+      <span
+        className="platform-readmore"
+        style={{ display: (isTruncated || expanded) ? 'inline-block' : 'none' }}
+        onClick={() => setExpanded((v) => !v)}
+      >
+        {expanded ? 'Show less' : 'Read more'}
+      </span>
+      <div style={{ borderTop: '1px solid var(--border-dim)', paddingTop: '16px' }}>
+        <p style={{ fontSize: '12px', color: 'var(--red)' }}>{module.details}</p>
+      </div>
+    </GlowCard>
+  );
+}
 
 const comparisonRows = [
   {
@@ -116,23 +163,7 @@ export default function PlatformPage() {
           </p>
 
           {/* Enhanced System Status Bar */}
-          <div
-            style={{
-              display: 'inline-flex',
-              gap: '32px',
-              background: 'rgba(211,47,47,0.06)',
-              borderRadius: '18px',
-              padding: '12px 32px',
-              margin: '0 auto',
-              boxShadow: '0 2px 12px 0 rgba(10,24,51,0.04)',
-              alignItems: 'center',
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '15px',
-              fontWeight: 500,
-              marginTop: '24px',
-              marginBottom: '0',
-            }}
-          >
+          <div className="platform-status-bar">
             {/* Network */}
             <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <Icons.Wifi size={18} style={{ color: '#43a047', marginRight: 4 }} />
@@ -165,25 +196,10 @@ export default function PlatformPage() {
           <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '48px' }}>
             Six Core Modules
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-            {AI_FIRST_MODULES.map((module) => {
-              const IconComponent = Icons[module.icon as keyof typeof Icons];
-              // Only use as icon if it's a function and does NOT have 'iconNode' property (Lucide utility)
-              const SafeIcon =
-                typeof IconComponent === 'function' && !("iconNode" in IconComponent)
-                  ? IconComponent
-                  : Icons.Zap;
-              return (
-                <GlowCard key={module.id}>
-                  <SafeIcon style={{ width: 32, height: 32, color: 'var(--red)', marginBottom: 16 }} />
-                  <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '12px' }}>{module.title}</h3>
-                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '16px' }}>{module.description}</p>
-                  <div style={{ borderTop: '1px solid var(--border-dim)', paddingTop: '16px' }}>
-                    <p style={{ fontSize: '12px', color: 'var(--red)' }}>{module.details}</p>
-                  </div>
-                </GlowCard>
-              );
-            })}
+          <div className="platform-modules-grid">
+            {AI_FIRST_MODULES.map((module) => (
+              <ModuleCard key={module.id} module={module} />
+            ))}
           </div>
         </div>
       </section>
@@ -215,7 +231,7 @@ export default function PlatformPage() {
           <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '48px' }}>
             Why Choose Vitto
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+          <div className="platform-benefits-grid">
             {[
               {
                 title: 'Production-Ready',

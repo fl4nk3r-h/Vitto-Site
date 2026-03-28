@@ -1,12 +1,14 @@
+
 import { Header } from '@/components/header';
 import '@/styles/automation-hero.css';
+import '@/styles/automation-responsive.css';
 import { Footer } from '@/components/footer';
 import { GradientText } from '@/components/ui/gradient-text';
 import { GlowCard } from '@/components/ui/glow-card';
 import { OPERATIONAL_MODULES } from '@/lib/constants/modules';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Layers, Database, Zap, Shield, Eye, Sparkles } from 'lucide-react';
+import { Layers, Database, Zap, Shield, Eye, Sparkles, Cloud, Server, FileText, Lock, BarChart3, Cpu, Settings, Globe, Key, Activity, Users, Folder, Wifi, Bell, Code2, Monitor, BookOpen, MessageCircle, Sliders, Terminal, TrendingUp, ClipboardList, Calendar, PieChart, AlertTriangle, CheckCircle2 } from 'lucide-react';
 
 const layerIcons = {
   'Data Foundation': Database,
@@ -15,6 +17,11 @@ const layerIcons = {
   'Compliance & Security': Shield,
   'Observability': Eye
 };
+
+// A pool of Lucide icons for module cards (visually appealing, varied)
+const moduleIcons = [
+  Cloud, Server, FileText, Lock, BarChart3, Cpu, Settings, Globe, Key, Activity, Users, Folder, Wifi, Bell, Code2, Monitor, BookOpen, MessageCircle, Sliders, Terminal, TrendingUp, ClipboardList, Calendar, PieChart, AlertTriangle, CheckCircle2
+];
 
 
 export default function AutomationPage() {
@@ -90,32 +97,136 @@ export default function AutomationPage() {
         </div>
       </section>
 
-      {/* Operational Layers */}
-      {OPERATIONAL_MODULES.map((layer, layerIndex) => {
-        const IconComponent = layerIcons[layer.layer as keyof typeof layerIcons] || Zap;
-        return (
-          <section key={layer.layer} style={{ background: layerIndex % 2 === 1 ? 'var(--bg-surface)' : 'var(--bg-base)' }}>
-            <div style={{ padding: '96px 0', borderBottom: '1px solid var(--border-dim)' }}>
-              <div className="container-vitto">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '48px' }}>
-                  <IconComponent style={{ width: 32, height: 32, color: 'var(--red)' }} />
-                  <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)' }}>
-                    {layer.layer}
-                  </h2>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-                  {layer.modules.map((module, index) => (
-                    <GlowCard key={index} delay={index * 0.05}>
-                      <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '12px' }}>{module.name}</h3>
-                      <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>{module.description}</p>
-                    </GlowCard>
-                  ))}
-                </div>
+      {/* Operational Layers - Premium Responsive Grid (Separated by Layer) */}
+      <section style={{
+        padding: '80px 0',
+        background: 'var(--bg-base)',
+      }}>
+        <div className="container-vitto">
+          <div style={{ textAlign: 'center', marginBottom: '64px' }}>
+            <h2 style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              fontWeight: 800,
+              color: 'var(--text-primary)',
+              marginBottom: '16px',
+              letterSpacing: '-0.02em',
+            }}>
+              Explore All Automation Modules
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              color: 'var(--text-secondary)',
+              maxWidth: '600px',
+              margin: '0 auto',
+            }}>
+              Mix and match modules from every layer to build your own custom automation stack.
+            </p>
+          </div>
+
+          {OPERATIONAL_MODULES.map((layer, layerIndex) => (
+            <div key={layer.layer} style={{ marginBottom: '48px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: 24 }}>
+                {(() => {
+                  const IconComponent = layerIcons[layer.layer as keyof typeof layerIcons] || Zap;
+                  return (
+                    <div style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: '50%',
+                      background: 'rgba(211,47,47,0.08)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      <IconComponent style={{ width: 22, height: 22, color: 'var(--red)' }} />
+                    </div>
+                  );
+                })()}
+                <h3 style={{
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  color: 'var(--red)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                  margin: 0
+                }}>{layer.layer}</h3>
+              </div>
+              <div
+                className="automation-grid"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+                  gap: '32px',
+                }}
+              >
+                {layer.modules.map((module, idx) => {
+                  // Pick a visually distinct icon for each module
+                  const Icon = moduleIcons[(layerIndex * 10 + idx) % moduleIcons.length];
+                  return (
+                    <div
+                      key={layer.layer + '-' + idx}
+                      style={{
+                        position: 'relative',
+                        background: 'var(--bg-surface)',
+                        borderRadius: 16,
+                        border: '1px solid var(--border-dim)',
+                        padding: '32px',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        boxShadow: '0 4px 24px rgba(10,24,51,0.08)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        overflow: 'hidden',
+                        minWidth: 0,
+                        minHeight: 0
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: 18 }}>
+                        <div style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: '50%',
+                          background: 'rgba(211,47,47,0.10)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0,
+                          boxShadow: '0 2px 8px 0 rgba(211,47,47,0.06)'
+                        }}>
+                          <Icon style={{ width: 22, height: 22, color: 'var(--red)' }} />
+                        </div>
+                        <h4 style={{
+                          fontSize: '17px',
+                          fontWeight: 700,
+                          color: 'var(--text-primary)',
+                          margin: 0,
+                          letterSpacing: '-0.01em',
+                          flex: 1,
+                          minWidth: 0,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}>{module.name}</h4>
+                      </div>
+                      <p style={{
+                        fontSize: '15px',
+                        color: 'var(--text-secondary)',
+                        lineHeight: 1.6,
+                        marginBottom: 0,
+                        minWidth: 0,
+                        overflowWrap: 'break-word',
+                        wordBreak: 'break-word'
+                      }}>{module.description}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          </section>
-        );
-      })}
+          ))}
+        </div>
+      </section>
 
       {/* Architecture Overview */}
       <section style={{ padding: '96px 0', background: 'var(--bg-surface)' }}>
@@ -168,7 +279,7 @@ export default function AutomationPage() {
           <h2 style={{ fontFamily: 'Inter, sans-serif', fontSize: '32px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '48px' }}>
             Real-World Example: Loan Processing Automation
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px' }}>
+          <div className="automation-example-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '32px' }}>
             <GlowCard>
               <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '16px' }}>Modules Used</h3>
               <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>

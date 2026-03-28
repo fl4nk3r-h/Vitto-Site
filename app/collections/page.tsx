@@ -2,6 +2,7 @@
 import React from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import '@/styles/collections-responsive.css';
 import { GradientText } from '@/components/ui/gradient-text';
 import { GlowCard } from '@/components/ui/glow-card';
 import { CheckCircle2, TrendingUp, Sparkles, Target, Zap, Link2, ClipboardList, Palette, Globe } from 'lucide-react';
