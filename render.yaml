@@ -1,0 +1,15 @@
+# Render deployment configuration for Vitto
+services:
+  - type: web
+    name: vitto-app
+    env: node
+    plan: starter
+    buildCommand: pnpm install && pnpm build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=4096
+    autoDeploy: true
+    healthCheckPath: /
