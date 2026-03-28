@@ -1,0 +1,6 @@
+.comparison-table-premium-highlight {
+  background: linear-gradient(90deg, rgba(211,47,47,0.05) 0%, transparent 100%);
+}
+.comparison-table-divider {
+  border-bottom: 1px dashed rgba(255,255,255,0.10) !important;
+}

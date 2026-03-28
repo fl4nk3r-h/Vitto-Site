@@ -1,0 +1,7 @@
+.comparison-table-row {
+  transition: background 150ms, border-left 150ms;
+}
+.comparison-table-row:hover {
+  background: rgba(211,47,47,0.05);
+  border-left: 1px solid #D32F2F;
+}

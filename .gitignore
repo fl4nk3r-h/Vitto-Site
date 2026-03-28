@@ -1,0 +1,24 @@
+# Environment variables
+.env*.local
+
+# Common ignores
+node_modules
+.next/
+.DS_Store
+
+# History and logs
+*.log
+*.history
+*.bak
+*.tmp
+*.swp
+*.swo
+
+# Editor directories
+.vscode/
+.idea/
+
+# Build outputs
+dist/
+build/
+out/
