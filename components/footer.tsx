@@ -93,7 +93,40 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Col 2 - Platform */}
+          {/* Col 2 - Pages */}
+          <div>
+            <h4 style={{
+              color: 'var(--text-primary)',
+              fontSize: '13px',
+              fontWeight: 600,
+              marginBottom: '16px',
+              textTransform: 'uppercase',
+              fontFamily: 'JetBrains Mono, monospace'
+            }}>
+              Pages
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {[
+                { label: 'Home', href: '/' },
+                { label: 'About / Why Vitto', href: '/about' },
+                { label: 'Contact / Request Demo', href: '/contact' },
+                { label: 'Self Sign-Up', href: '/signup' },
+              ].map((item) => (
+                <li key={item.label} style={{ marginBottom: '12px' }}>
+                  <Link href={item.href} style={{
+                    color: 'var(--text-muted)',
+                    textDecoration: 'none',
+                    fontSize: '13px',
+                    transition: 'color 200ms'
+                  }} className="footer-link">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3 - Platform */}
           <div>
             <h4 style={{
               color: 'var(--text-primary)',
@@ -107,12 +140,11 @@ export function Footer() {
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {[
-                { label: 'Homepage', href: '/' },
-                { label: 'AI Platform', href: '/platform' },
-                { label: 'Automation', href: '/automation' },
-                { label: 'Collections', href: '/collections' },
+                { label: 'AI-First Platform', href: '/platform' },
+                { label: 'Full Stack Automation', href: '/automation' },
+                { label: 'Collections Intelligence', href: '/collections' },
                 { label: 'Agentic AI', href: '/agentic-ai' },
-                { label: 'API', href: '/api' }
+                { label: 'API Infrastructure', href: '/api' },
               ].map((item) => (
                 <li key={item.label} style={{ marginBottom: '12px' }}>
                   <Link href={item.href} style={{
@@ -128,7 +160,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 3 - Company */}
+          {/* Col 4 - Partners */}
           <div>
             <h4 style={{
               color: 'var(--text-primary)',
@@ -138,90 +170,62 @@ export function Footer() {
               textTransform: 'uppercase',
               fontFamily: 'JetBrains Mono, monospace'
             }}>
-              Company
+              Partners
             </h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {[
-                { label: 'About', href: '/about' },
-                { label: 'Why AI-Native', href: '/why-ai-native' },
-                { label: 'Careers', href: '/careers' },
-                { label: 'Blog', href: '/blog' }
-              ].map((item) => (
-                <li key={item.label} style={{ marginBottom: '12px' }}>
-                  <Link href={item.href} style={{
-                    color: 'var(--text-muted)',
-                    textDecoration: 'none',
-                    fontSize: '13px',
-                    transition: 'color 200ms'
-                  }} className="footer-link">
-                    {item.label}
-                  </Link>
+              {['CIBIL', 'Experian', 'CRIF', 'DigiLocker', 'Razorpay'].map((name) => (
+                <li key={name} style={{ marginBottom: '12px' }}>
+                  <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>{name}</span>
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* Col 4 - Connect */}
-          <div>
-            <h4 style={{
-              color: 'var(--text-primary)',
-              fontSize: '13px',
-              fontWeight: 600,
-              marginBottom: '16px',
-              textTransform: 'uppercase',
-              fontFamily: 'JetBrains Mono, monospace'
-            }}>
-              Connect
-            </h4>
-            <div style={{
-              display: 'flex',
-              gap: '8px',
-              marginBottom: '16px'
-            }}>
-              <a href="https://linkedin.com/company/vittoai" target="_blank" rel="noopener noreferrer" style={{
-                width: '28px',
-                height: '28px',
-                background: 'var(--bg-elevated)',
-                border: 'none',
-                borderRadius: '6px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                color: 'var(--text-muted)',
-                transition: 'color 200ms'
-              }} className="social-icon">
+            <div style={{ display: 'flex', gap: '8px', marginTop: '18px' }}>
+              <a
+                href="https://linkedin.com/company/vittoai"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  background: 'var(--bg-elevated)',
+                  border: 'none',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: 'var(--text-muted)',
+                  transition: 'color 200ms'
+                }}
+                className="social-icon"
+                aria-label="LinkedIn"
+              >
                 <Linkedin size={16} />
               </a>
-              <a href="https://twitter.com/vittoai" target="_blank" rel="noopener noreferrer" style={{
-                width: '28px',
-                height: '28px',
-                background: 'var(--bg-elevated)',
-                border: 'none',
-                borderRadius: '6px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                color: 'var(--text-muted)',
-                transition: 'color 200ms'
-              }} className="social-icon">
+              <a
+                href="https://twitter.com/vittoai"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                  background: 'var(--bg-elevated)',
+                  border: 'none',
+                  borderRadius: '6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: 'var(--text-muted)',
+                  transition: 'color 200ms'
+                }}
+                className="social-icon"
+                aria-label="Twitter"
+              >
                 <Twitter size={16} />
               </a>
             </div>
-            <p style={{
-              color: 'var(--text-muted)',
-              fontSize: '13px',
-              marginBottom: '8px'
-            }}>
-              hello@vitto.ai
-            </p>
-            <p style={{
-              color: 'var(--text-muted)',
-              fontSize: '13px'
-            }}>
-              Mumbai, India
-            </p>
           </div>
         </div>
 
