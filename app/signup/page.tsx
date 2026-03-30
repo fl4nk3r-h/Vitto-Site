@@ -15,6 +15,12 @@ import { useOTP } from '@/lib/hooks/useOTP';
 
 type Step = 'email' | 'otp' | 'organization' | 'success';
 
+type SendOtpResponse = {
+  success?: boolean;
+  message?: string;
+  otp?: string;
+};
+
 export default function SignUpPage() {
   const [step, setStep] = useState<Step>('email');
   const [email, setEmail] = useState('');
@@ -30,11 +36,18 @@ export default function SignUpPage() {
     loanBookSize: ''
   });
 
+  const maybeShowOtpPopup = (data: unknown) => {
+    const otp = (data as SendOtpResponse | null | undefined)?.otp;
+    if (typeof otp === 'string' && otp.trim().length > 0) {
+      window.alert(`OTP (demo): ${otp}`);
+    }
+  };
+
   const handleSendOTP = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/auth/send-otp', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -44,6 +57,8 @@ export default function SignUpPage() {
         throw new Error('Failed to send OTP');
       }
 
+      const data = await response.json().catch(() => null);
+      maybeShowOtpPopup(data);
       setStep('otp');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to send OTP');
@@ -56,7 +71,7 @@ export default function SignUpPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/auth/send-otp', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -65,6 +80,8 @@ export default function SignUpPage() {
       if (!response.ok) {
         throw new Error('Failed to resend OTP');
       }
+      const data = await response.json().catch(() => null);
+      maybeShowOtpPopup(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to resend OTP');
     } finally {
@@ -77,7 +94,7 @@ export default function SignUpPage() {
     setError(null);
     try {
       const otpString = otp.join('');
-      const response = await fetch('/api/auth/verify-otp', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp: otpString })
@@ -114,9 +131,9 @@ export default function SignUpPage() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/leads', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leads`, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${sessionToken}`
         },
@@ -159,7 +176,7 @@ export default function SignUpPage() {
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-[#181A20] via-[#0a1833] to-[#2d0a0a]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(211,47,47,0.13)_0%,transparent_70%)]" />
-        <div className="absolute inset-0 pointer-events-none" style={{backgroundImage:'repeating-linear-gradient(0deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px),repeating-linear-gradient(90deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px)'}} />
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: 'repeating-linear-gradient(0deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px),repeating-linear-gradient(90deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_40px)' }} />
         {/* Radial highlight behind card */}
         <div className="absolute left-1/2 top-[32%] -translate-x-1/2 -z-10 w-[520px] h-[340px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.10)_0%,rgba(211,47,47,0.10)_60%,transparent_100%)] blur-2xl opacity-80" />
       </div>
@@ -228,8 +245,8 @@ export default function SignUpPage() {
               </p>
 
               {/* Step Content - Glassmorphism Card with integrated progress */}
-              <div className="relative bg-white/10 border border-white/20 rounded-2xl shadow-xl shadow-black/30 backdrop-blur-[12px] px-6 py-8 sm:px-10 sm:py-10 transition-all duration-300 group focus-within:shadow-red-glow focus-within:border-red-500/60" style={{boxShadow:'0 4px 32px 0 rgba(211,47,47,0.10), 0 2px 16px 0 rgba(211,47,47,0.10)'}}>
-                <div className="absolute -inset-px rounded-2xl pointer-events-none" style={{background:'linear-gradient(120deg,rgba(255,255,255,0.08) 0%,rgba(211,47,47,0.10) 100%)',zIndex:0}} />
+              <div className="relative bg-white/10 border border-white/20 rounded-2xl shadow-xl shadow-black/30 backdrop-blur-[12px] px-6 py-8 sm:px-10 sm:py-10 transition-all duration-300 group focus-within:shadow-red-glow focus-within:border-red-500/60" style={{ boxShadow: '0 4px 32px 0 rgba(211,47,47,0.10), 0 2px 16px 0 rgba(211,47,47,0.10)' }}>
+                <div className="absolute -inset-px rounded-2xl pointer-events-none" style={{ background: 'linear-gradient(120deg,rgba(255,255,255,0.08) 0%,rgba(211,47,47,0.10) 100%)', zIndex: 0 }} />
                 <div className="relative z-10">
                   {/* Progress indicator inside card */}
                   <div className="mb-6">

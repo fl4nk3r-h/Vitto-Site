@@ -13,6 +13,13 @@ interface StepEmailProps {
 
 export function StepEmail({ email, onEmailChange, onNext, isLoading, error }: StepEmailProps) {
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  console.log('StepEmail: isLoading', isLoading, 'email', email, 'isValidEmail', isValidEmail);
+
+  // Debug: log every input change
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log('Input changed:', e.target.value);
+    onEmailChange(e.target.value);
+  }
 
   return (
     <div className="fade-in-up space-y-6">
@@ -25,7 +32,7 @@ export function StepEmail({ email, onEmailChange, onNext, isLoading, error }: St
           <input
             type="email"
             value={email}
-            onChange={(e) => onEmailChange(e.target.value)}
+            onChange={handleInputChange}
             placeholder="you@company.com"
             className="w-full pl-12 pr-4 py-3 text-base border border-white/10 rounded-xl bg-white/5 text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/30 focus:shadow-[0_0_0_2px_#D32F2F33] transition-all duration-200 backdrop-blur-sm shadow-sm hover:shadow-red-glow"
             disabled={isLoading}

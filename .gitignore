@@ -23,3 +23,6 @@ dist/
 build/
 out/
 docs/quick-start-guide.md
+
+# Others
+.codex

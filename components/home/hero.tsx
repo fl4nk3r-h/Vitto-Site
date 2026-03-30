@@ -84,14 +84,14 @@ export function Hero() {
             <h1 className="text-h1 gradient-text" style={{
               animation: 'fadeInUp 0.8s ease-out 0.1s both'
             }}>
-              The Modern Standard for Credit Decisioning.
+              AI-First Infrastructure for Modern Financial Services
             </h1>
 
             {/* Subtitle */}
             <p className="text-body max-w-lg" style={{
               animation: 'fadeInUp 0.8s ease-out 0.2s both'
             }}>
-              Vitto replaces your fragmented LOS, LMS, and Collections stack with a single AI-native infrastructure — purpose-built for Banks, NBFCs, and Microfinance Institutions. Not retrofitted. Not patched. Built from scratch.
+              Not retrofitted AI. Not fragmented vendors. Built specifically for Banks, NBFCs, and MFIs — with one unified decisioning layer across acquisition, underwriting, servicing, and collections.
             </p>
 
             {/* CTA Buttons */}
@@ -100,7 +100,7 @@ export function Hero() {
             }}>
               <Link href="/signup">
                 <button className="btn-primary">
-                  Book a Demo →
+                  Book a Demo
                 </button>
               </Link>
               <Link href="/platform">
@@ -122,7 +122,7 @@ export function Hero() {
               animation: 'fadeInUp 0.8s ease-out 0.4s both',
               flexWrap: 'wrap'
             }}>
-              <span>🔒 SOC 2 Type II</span>
+              <span>SOC 2 Type II</span>
               <span>·</span>
               <span>RBI-Aligned Explainability</span>
               <span>·</span>

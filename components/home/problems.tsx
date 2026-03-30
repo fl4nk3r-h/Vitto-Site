@@ -4,23 +4,23 @@
 const PROBLEMS = [
   {
     num: '01',
-    title: "Data lives in four systems that don't talk.",
-    description: "Your LOS knows origination. Your LMS knows repayment. Your CRM knows the customer. No model ever sees the full borrower picture — which means every credit decision is made with incomplete information."
+    title: "Fragmented Systems",
+    description: "Siloed LOS, LMS, and CRM with no unified data layer. Your credit models never see the full borrower context across origination, servicing, and collections."
   },
   {
     num: '02',
-    title: "Retrofitted AI sees only what legacy exposes.",
-    description: "Vendors add an AI module on top of a 15-year-old core. That module can only access data the legacy system surfaces — rarely the real-time operational data that accurate credit assessment requires."
+    title: "Non-AI Native Vendors",
+    description: "AI bolted on top of legacy systems. The “AI layer” can only access what the old core exposes—missing real-time operational signals required for accurate decisioning."
   },
   {
     num: '03',
-    title: "Collections teams work from yesterday's data.",
-    description: "Propensity scoring happens in spreadsheets. Contact prioritisation is manual. By the time a delinquent borrower is flagged, the optimal recovery window has usually closed."
+    title: "Reactive Collections",
+    description: "No predictive capability and manual prioritisation. Teams chase arrears after they happen, not before they materialise—reducing recovery rates and increasing cost-to-collect."
   },
   {
     num: '04',
-    title: "Rule engines that need engineers to change a threshold.",
-    description: "Static credit policies set once and rarely revised. When portfolio behaviour shifts — and it always does — the rules don't. The credit team absorbs the delta."
+    title: "Static Rule Engines",
+    description: "Rules that don't learn or adapt. Policy tweaks require engineering cycles, and thresholds lag behind portfolio behaviour—creating avoidable risk and operational drag."
   }
 ];
 
@@ -47,11 +47,10 @@ export function Problems() {
 
         {/* Heading */}
         <h2 className="text-h2 gradient-text" style={{ marginBottom: '16px', maxWidth: '640px' }}>
-          Today's lending tech was built for a different era.
+          The Reality of Today's Lending Technology
         </h2>
         <p className="text-body" style={{ maxWidth: '560px', marginBottom: '64px' }}>
-          Most BFSI institutions run on infrastructure designed in the early 2000s — 
-          patched, re-patched, and now carrying the weight of a decade of workarounds.
+          Most institutions run critical lending operations across multiple vendors and legacy cores. The result is incomplete data, slow iteration, and decisioning that cannot be trusted at scale.
         </p>
 
         {/* Cards grid */}

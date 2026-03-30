@@ -1,40 +1,48 @@
 'use client';
 
+import Link from 'next/link';
+
 const MODULES = [
   {
+    id: 'data-based-assessment',
     tag: 'INGESTION LAYER',
     title: 'Data-Based Assessment',
-    desc: 'Multi-bureau pull, bank statement analysis, GST data, and alternative signals — normalised into a unified borrower feature vector.',
+    desc: 'Multi-bureau pull, bank statement analysis, GST, and alternative signals normalised into one borrower feature set.',
     icon: '⬡'
   },
   {
+    id: 'ml-model',
     tag: 'PREDICTION LAYER',
     title: 'ML Model Engine',
-    desc: 'Ensemble models for PD, LGD, and EAD — continuously retrained on live portfolio performance. Domain-specific, not benchmark-tuned.',
+    desc: 'Ensemble models for PD/LGD/EAD with continuous retraining and drift monitoring on live portfolio outcomes.',
     icon: '◈'
   },
   {
+    id: 'rule-engine-decisioning',
     tag: 'POLICY LAYER',
     title: 'Rule Engine & Decisioning',
-    desc: 'Configurable policy rules above ML scores — adjustable by credit managers without engineering intervention.',
+    desc: 'Policy rules on top of ML scores, configurable by credit managers without engineering deployment cycles.',
     icon: '◻'
   },
   {
+    id: 'fraud-intelligence',
     tag: 'RISK LAYER',
     title: 'Fraud Intelligence',
-    desc: 'Identity fraud, document tampering, and network fraud detection using graph-based relationship models — real-time, before disbursement.',
+    desc: 'Identity and document fraud detection with real-time checks before disbursement and ongoing monitoring.',
     icon: '◬'
   },
   {
+    id: 'collections-intelligence',
     tag: 'RECOVERY LAYER',
     title: 'Collections Intelligence',
-    desc: 'Propensity-to-pay scoring, optimal contact-time prediction, and channel selection — fully automated and self-improving.',
+    desc: 'Propensity-to-pay scoring, contact-time prediction, and channel selection to improve recovery at lower cost.',
     icon: '◎'
   },
   {
+    id: 'agentic-ai-layer',
     tag: 'INTELLIGENCE LAYER',
     title: 'Agentic AI Layer',
-    desc: 'Domain-trained SLM powering Borrower Agent, Field Agent, and Underwriter Agent. Not a public LLM wrapper — a credit-domain operative.',
+    desc: 'Domain-trained SLM powering Borrower, Field, and Underwriter agents with policy grounding and auditability.',
     icon: '◉',
     featured: true
   }
@@ -139,15 +147,19 @@ export function Modules() {
                 {m.desc}
               </p>
 
-              <div style={{
-                borderTop: '1px solid var(--border-dim)',
-                paddingTop: '16px',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '13px',
-                color: 'var(--red)',
-                cursor: 'pointer'
-              }}>
-                Explore module →
+              <div style={{ borderTop: '1px solid var(--border-dim)', paddingTop: '16px' }}>
+                <Link
+                  href="/platform"
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '13px',
+                    color: 'var(--red)',
+                    textDecoration: 'none',
+                    display: 'inline-block'
+                  }}
+                >
+                  Explore
+                </Link>
               </div>
             </div>
           ))}
